@@ -1,0 +1,105 @@
+<div class="container-fluid" ng-controller="OrderController">
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+
+      <div class="col-md-2">
+        <!--Sidebar content   | filter : $ctrl.query-->
+  
+        <p>
+          Search:
+          <input ng-model="$ctrl.query" />
+        </p>
+  
+        <p>
+          User Sort by:
+          <select ng-model="$ctrl.orderProp">
+            <option value="Id">Id</option>
+            <option value="Surname">Surname</option>
+            <option value="DisplayName">Display Name</option>
+            <option value="Name">Name</option>
+            <option value="Department">Department</option>
+          </select>
+        </p>
+  
+        <p>
+          Request Sort by:
+          <select ng-model="$ctrl.orderPropR">
+            <option value="Id">Id</option>
+            <option value="RequestName">RequestName</option>
+            <option value="Requestor">Requestor</option>
+            <option value="Budget">Budget</option>
+            <option value="Status">Status</option>
+            <option value="Deadline">Deadline</option>
+          </select>
+        </p>
+  
+      </div>
+
+    </div>
+    <div class="col-md-10">
+      <!--Body content-->
+    
+<div  class="datablocks" ng-repeat = "datablock in $ctrl.datablocks">
+      <!--Users table-->
+      <div ng-if="$index == 0"><h1>Users</h1>
+    <table><tr>
+      <th ng-click="sortBy('DisplayName') ; $ctrl.orderProp=orderProp = 'DisplayName'">Display name
+        <span class="sortorder" ng-show="orderProp == 'DisplayName'" ng-class="{reverse: reverse}"></span></th>
+      <th ng-click="sortBy('Name') ; $ctrl.orderProp=orderProp = 'Name'">Name
+        <span class="sortorder" ng-show="orderProp == 'Name'" ng-class="{reverse: reverse}"></span></th>
+      <th ng-click="sortBy('Surname') ; $ctrl.orderProp=orderProp = 'Surname'">Surname
+        <span class="sortorder" ng-show="orderProp == 'Surname'" ng-class="{reverse: reverse}"></span></th>
+      <th ng-click="sortBy('Department') ; $ctrl.orderProp=orderProp = 'Department'">Department
+        <span class="sortorder" ng-show="orderProp == 'Department'" ng-class="{reverse: reverse}"></span></th>
+      <th>Email </th>
+      <th ng-click="sortBy('Id') ; $ctrl.orderProp=orderProp = 'Id'">Id
+        <span class="sortorder" ng-show="orderProp == 'Id'" ng-class="{reverse: reverse}"></span></th>
+      <th>Manager </th>
+      <th>Roles</th>
+      </tr>
+  <tr ng-repeat="innerList in datablock | orderBy:orderPropA" ng-init="outerIndex = $index">
+      <td ng-repeat="(key, value1) in datablock[outerIndex]">{{value1}}</td>
+    </tr></table>
+
+    <script>
+      var app = angular.module('myApp', []);
+      app.controller('orderCtrl', function($scope) {
+          $scope.datablock = datablock[$scope.outerIndex];
+      });
+      </script>
+   </div>
+
+  
+      <!--Requests table-->
+      <div ng-if="$index == 1 "><h1>Requests</h1>
+        <table><tr>
+          <th ng-click="$ctrl.orderPropR = 'RequestName'">RequestName </th>
+          <th ng-click="$ctrl.orderPropR = 'Requestor'">Requestor </th>
+          <th>GoodEnding  </th>
+          <th>Description  </th>
+          <th>NeedStoryteller  Storyteller </th>
+          <th>WantedCharacters  </th>
+          <th ng-click="$ctrl.orderPropR = 'Deadline'">Deadline </th>
+          <th ng-click="$ctrl.orderPropR = 'Budget'">Budget </th>
+          <th ng-click="$ctrl.orderPropR = 'Status'">Status </th>
+          <th ng-click="$ctrl.orderPropR = 'Id'">Id</th>
+          </tr>
+      <tr ng-repeat="innerList in datablock | filter:$ctrl.query | orderBy : $ctrl.orderPropR" ng-init="outerIndex = $index">
+    
+          <td ng-repeat="(key, value1) in datablock[outerIndex]" ng-if="key !='Storyteller'">
+            <span ng-if="key == 'Deadline'">{{value1  | date:'yyyy-MM-dd HH:mm:ss Z'}}</span> 
+            <span ng-if="key == 'Description'"><span style="font-size: x-small;">{{value1}}</span></span> 
+            <span ng-if="key != 'Description' && key != 'Deadline'">{{value1}}</span> 
+            
+          <span ng-if="key =='NeedStoryteller' && value1==true">{{datablock[outerIndex]['Storyteller']}}</span>  
+          </td>
+                  </tr></table>
+       </div>
+
+      </div>
+
+
+</div>
+</div>
+</div>

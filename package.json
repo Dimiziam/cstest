@@ -15,7 +15,6 @@
         "cpx": "^1.5.0",
         "http-server": "^0.11.1",
         "jasmine-core": "^3.5.0"
-
     },
     "scripts": {
         "postinstall": "npm run copy-libs",
@@ -29,6 +28,5 @@
         "test-single-run": "npm test -- --single-run",
         "preupdate-webdriver": "npm install",
         "update-webdriver": "webdriver-manager update"
-
     }
 }
