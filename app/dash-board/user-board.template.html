@@ -1,0 +1,86 @@
+<div ng-if="$index == 0" class="mtb100">
+    <div class="mtbline"></div>
+    <h1 class="head23">Users table</h1>
+    <div class="mtb100">
+        <!--Sidebar content-->
+        <!--Sidebar content   | filter : $ctrl.queryU ; zaza = checkpagemy(pagequant(filteredU), startnumU)-->
+        <div class="ctrls">
+            <table class="ctrls" id="nobord">
+                <tr>
+                    <td class="pad15side">Search:
+                        <input class=black ng-model="$ctrl.queryU" size="5" ng-change="filterU()"></td>
+                    <td class="pad15side">Request Sort by:
+                        <select ng-model="$ctrl.orderPropU" class=black>
+        <option value="Id">ID</option>
+        <option value="DisplayName">Display Name</option>
+        <option value="Name">Name</option>
+        <option value="Surname">Surname</option>
+        <option value="Department">Department</option>
+        <option value="Email">Email</option>
+        <option value="Manager">Manager</option>
+      </select><button class="button_nav" ng-click="sortByU($ctrl.orderPropU)">< - ></button></td>
+                    <td class="pad15side"><a href="/">Reload</a></td>
+                    <td class="pad15side">Prepare table for Excel export</td>
+                    <td class="strangegrey" id="nobord">Request completed. Result content: {{filteredU.length}}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+    <table>
+        <tr>
+            <td colspan=9>
+                <span ng-if="startnumU > 0"> <button ng-click="prevpage(startnumU)" class="button_nav"><<</button> </span> &nbsp; Page {{((startnumU+perpage) / perpage)}} of {{pagequant(filteredU)}}&nbsp;
+                <span ng-if="((startnumU + perpage) / perpage) < pagequant(filteredU)"> <button class="button_nav" ng-click="nextpage(startnumU)">>></button> </span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th ng-click="sortByU('Id') ; $ctrl.orderPropU=orderPropU ='Id'" nowrap width="50">ID
+                <span class="sortorder" ng-show="$ctrl.orderPropU === 'Id'" ng-class="{reverse: reverseU}"></span>
+            </th>
+            <th ng-click="sortByU('DisplayName') ; $ctrl.orderPropU=orderPropU ='DisplayName'">Display Name
+                <span class="sortorder" ng-show="$ctrl.orderPropU === 'DisplayName'" ng-class="{reverse: reverse}"></span>
+            </th>
+            <th ng-click="sortByU('Name') ; $ctrl.orderPropU=orderPropU ='Name'">Name
+                <span class="sortorder" ng-show="$ctrl.orderPropU === 'Name'" ng-class="{reverse: reverse}"></span></th>
+            <th ng-click="sortByU('Surname') ; $ctrl.orderPropU=orderPropU ='Surname'">Surname
+                <span class="sortorder" ng-show="$ctrl.orderPropU === 'Surname'" ng-class="{reverse: reverse}"></span></th>
+            <th ng-click="sortByU('Department') ; $ctrl.orderPropU=orderPropU ='Department'">Department
+                <span class="sortorder" ng-show="$ctrl.orderPropU === 'Department'" ng-class="{reverse: reverse}"></span>
+            </th>
+            <th ng-click="sortByU('Email') ; $ctrl.orderPropU=orderPropU ='Email'">E-mail
+                <span class="sortorder" ng-show="$ctrl.orderPropU === 'Email'" ng-class="{reverse: reverse}"></span></th>
+            <th ng-click="sortByU('Manager') ; $ctrl.orderPropU=orderPropU ='Manager'">Manager
+                <span class="sortorder" ng-show="$ctrl.orderPropU === 'Manager'" ng-class="{reverse: reverse}"></span>
+            </th>
+            <th>Roles</span>
+            </th>
+            <th>Controls</th>
+        </tr>
+
+        <tr class="rowdeskwhite" ng-repeat="ReqDataU in filteredU = (datablock | filter:$ctrl.queryU) | filter:$ctrl.queryU | orderBy : orderPropUA  | limitTo:perpage:startnumU">
+            <td>{{ReqDataU['Id']}} </td>
+            <td>
+                <div class="tooltip">{{truncString(ReqDataU['DisplayName'],100)}}</div>
+            </td>
+            <td>{{ReqDataU['Name']}} </td>
+            <td>{{ReqDataU['Surname']}}</td>
+            <td>{{ReqDataU['Department']}}</td>
+            <td>{{ReqDataU['Email']}} </td>
+            <td><span ng-if="ReqDataU['Manager']"><strong>&nbsp;&nbsp;&#10003;<strong</td>
+            <td><select style="border: 0px">
+                <option ng-repeat="userrole in ReqDataU['Roles']" value="{{userrole}}" ng-selected="{{$index == 0}}">{{userrole}}</option>"
+            </select>
+        </td>
+            <td> <a href="#!/form">>></a></td>
+        </tr>
+        <tr>
+            <td colspan=9>
+                <span ng-if="startnumU > 0"> <button  class="button_nav" ng-click="prevpage(startnumU)"><<</button> </span> &nbsp; Page {{((startnumU+perpage) / perpage)}} of {{pagequant(filteredU)}}&nbsp;
+                <span ng-if="((startnumU + perpage) / perpage) < pagequant(filteredU)"> <button class="button_nav" ng-click="nextpage(startnumU)">>></button> </span>
+            </td>
+        </tr>
+    </table>
+</div>

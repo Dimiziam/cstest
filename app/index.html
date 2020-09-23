@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" ng-app="dashBoardApp">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Credit Suisse - Additional Task for AngularJS</title>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="app.css" />
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-route/angular-route.js"></script>
+    <script src="app.module.js"></script>
+    <script src="app.config.js"></script>
+    <script src="dash-board/dash-board.module.js"></script>
+    <script src="dash-board/dash-board.component.js"></script>
+    <script src="form-desk/form-desk.module.js"></script>
+    <script src="form-desk/form-desk.component.js"></script>
+
+</head>
+
+<body>
+    <ng-include src="'/header.html'"></ng-include>
+    <!-- 
+        <dash-board>Loading</dash-board>   
+        <div ng-view>View loading</div>
+    -->
+    <div ng-view>View loading</div>
+    <ng-include src="'/footer.html'"></ng-include>
+</body>
+
+</html>
