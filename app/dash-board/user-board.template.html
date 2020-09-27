@@ -3,7 +3,6 @@
     <h1 class="head23">Users table</h1>
     <div class="mtb100">
         <!--Sidebar content-->
-        <!--Sidebar content   | filter : $ctrl.queryU ; zaza = checkpagemy(pagequant(filteredU), startnumU)-->
         <div class="ctrls">
             <table class="ctrls" id="nobord">
                 <tr>
@@ -27,7 +26,6 @@
         </div>
 
     </div>
-
     <table>
         <tr>
             <td colspan=9>
@@ -74,7 +72,7 @@
                 <option ng-repeat="userrole in ReqDataU['Roles']" value="{{userrole}}" ng-selected="{{$index == 0}}">{{userrole}}</option>"
             </select>
         </td>
-            <td> <a href="#!/form">>></a></td>
+            <td class="editpic"><a name="u{{ReqDataU['Id']}}"  ng-click="setfoo('u'+ReqDataU['Id'])" title="Edit user {{ReqDataU['Id']}}"><img alt="Edit user {{ReqDataU['Id']}}" src="/img/edit20.png"></a></td>
         </tr>
         <tr>
             <td colspan=9>
@@ -83,4 +81,5 @@
             </td>
         </tr>
     </table>
+    <button class="button_biggest" ng-click="setnew('u')">Create new user</button>
 </div>

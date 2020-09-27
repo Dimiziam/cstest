@@ -6,7 +6,6 @@
         background: #fff;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        font-size: 1em;
         font-style: normal;
         font-variant: normal;
     }
@@ -33,12 +32,25 @@
         font-size: 12px;
     }
     
-    .mtb50 .mtb100 {
+    .mtb30 .mtb40 .mtb50 .mtb100 .datablocks {
         position: relative;
         min-height: 1px;
-        padding-right: 15px;
-        padding-left: 15px;
+        padding-right: 10px;
+        padding-left: 10px;
         float: left;
+    }
+    
+    .mtb30r {
+        position: relative;
+        min-height: 1px;
+        padding-right: 10px;
+        padding-left: 10px;
+        float: left;
+        width: 30%;
+    }
+    
+    .error {
+        color: darkred;
     }
     
     .container-fluid {
@@ -77,6 +89,14 @@
     
     .mtb50 {
         width: 50%;
+    }
+    
+    .mtb40 {
+        width: 40%;
+    }
+    
+    .mtb30 {
+        width: 30%;
     }
     
     .mtb80 {
@@ -263,6 +283,11 @@
         align-items: center;
         text-decoration: none;
         color: #fff
+    }
+    
+    .editpic {
+        text-align: center;
+        cursor: pointer;
     }
     
     .tooltip {

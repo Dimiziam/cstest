@@ -1,0 +1,43 @@
+<!--<span userdata {{userdata.Department}} backseat {{backseat.Department}} <pre>{{userdata}}</pre></span>-->
+<div class="mtb100"><button class="button_bigform">Request submission</button><button class="button_bigform" id="white" ng-click="returntodash()">Save changes</button></div>
+<div class="h2form">
+    <h2 class="h2form">User (ID # {{userdata.Id}})</h2>
+</div>
+<md-content md-theme="docs-light" layout-gt-sm="column">
+    <div class="md-inline-form" class="mtb100">
+        <input ng-model="userdata.Id" disabled="" type="hidden">
+        <md-input-container class="mtb80">
+            <label class="cslabel">Display Name</label>
+            <input required ng-model="userdata.DisplayName" class="input-container">
+        </md-input-container>
+        <div class="mtb100">
+            <md-input-container class="mtb40"><label class="cslabel">Name</label><input required class="input-container" name="Name" ng-model="userdata.Name">
+                <div ng-messages="userdata.Name.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="mtb40"><label class="cslabel">Surname</label><input required class="input-container" name="Surname" ng-model="userdata.Surname"></md-input-container>
+        </div>
+        <div class="mtb100">
+            <md-input-container class="mtb40"><label class="cslabel">Department</label><input class="input-container" name="Department" ng-model="userdata.Department"></md-input-container>
+            <md-input-container class="mtb40"><label class="cslabel">Email</label><input required type="email" name="Email" ng-model="userdata.Email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" class="input-container"></md-input-container>
+        </div>
+
+        <div class="mtb100"><label class="cslabel">Roles</label>
+            <md-subheader id="commaSeparatorKeyDescription">
+                You can use either the Enter or Comma keys to trigger roles creation.
+            </md-subheader>
+            <md-chips ng-model="userdata.Roles" input-aria-label="Tags" md-separator-keys="ctrl.keys" placeholder="Ex. angularjs-material" secondary-placeholder="Add another role" input-aria-describedby="commaSeparatorKeyDescription">
+            </md-chips>
+            <label class="cslabel">Is Manager</label>
+            <md-checkbox ng-model="userdata.Manager"></md-checkbox>
+        </div>
+
+        <div class="mtb100">
+            <md-button class="button_bigform" type="submit" ng-click="updateU(userdata)" name="Submit" value="Submit" ng-if="setnew == 0">Submit</md-button>
+            <md-button class="button_bigform" type="reset" ng-click="resetU()" name="Reset" value="Reset">Reset</md-button>
+            <md-button class="button_bigform" type="submit" ng-click="pushdata(userdata, $ctrl.dataarray['Users'])" name="Submit" value="Submit" ng-if="setnew > 0">Save</md-button>
+            <md-button class="button_bigform" type="submit" ng-click="returntodash()" name="Submit" value="Submit">Cancel</md-button>
+        </div>
+    </div>
+</md-content>

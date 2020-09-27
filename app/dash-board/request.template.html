@@ -1,0 +1,115 @@
+<h1>Online reporting - GCMC</h1>
+
+<div class="mtb100">
+    <div class="mtb50"><button class="button_biggest">Create new matter</button></div>
+    {{initdata()}}
+    <div class="datablocks" ng-repeat="datablock in $ctrl.datablocks">
+        <!--Users table-->
+        <ng-include src="'dash-board/user-board.template.html'"></ng-include>
+        <!--Requests table-->
+
+        <div ng-if="$index == 1" class="mtb100">
+            <div class="mtbline"></div>
+            <h1 class="head23">Request table</h1>
+            <div class="mtb100">
+                <!--Sidebar content-->
+                <!--Sidebar content   | filter : $ctrl.query-->
+                <div class="ctrls">
+                    <table class="ctrls" id="nobord">
+                        <tr>
+                            <td class="pad15side">Search:
+                                <input class=black ng-model="$ctrl.query" size="5" ng-change="filter()"></td>
+                            <td class="pad15side">Request Sort by:
+                                <select ng-model="$ctrl.orderProp" class=black>
+                <option value="Id">ID</option>
+                <option value="RequestName">Request Name</option>
+                <option value="Requestor">Requestor</option>
+                <option value="GoodEnding">Good Ending</option>
+                <option value="Storyteller">Storyteller</option>
+                <option value="Deadline">Deadline</option>
+                <option value="WantedCharacters">Wanted Characters</option>
+                <option value="Budget">Budget</option>
+                <option value="Status">Status</option>
+              </select><button class="button_nav" ng-click="sortBy($ctrl.orderProp)">< - ></button></td>
+                            <td class="pad15side"><a href="/">Reload</a></td>
+                            <td class="pad15side">Prepare table for Excel export</td>
+                            <td class="strangegrey" id="nobord">Request completed. Result content: {{filtered.length}}</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <table>
+                <tr>
+                    <td colspan=11>
+                        <span ng-if="startnum > 0"> <button ng-click="prevpage(startnum, 1)" class="button_nav"><<</button> </span> &nbsp; Page {{((startnum+perpage) / perpage)}} of {{pagequant(filtered)}}&nbsp;
+                        <span ng-if="((startnum + perpage) / perpage) < pagequant(filtered)"> <button class="button_nav" ng-click="nextpage(startnum, 1)">>></button> </span>
+                        </span>
+                        <!-- reverse {{reverse}} -:- propname {{propertyName}} -:- orderPropA {{orderPropA}} -:- orderProp {{orderProp}} -->
+                    </td>
+                </tr>
+                <tr>
+                    <th ng-click="sortBy('Id') ; $ctrl.orderProp=orderProp ='Id'" nowrap width="50">ID
+                        <span class="sortorder" ng-show="$ctrl.orderProp === 'Id'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th ng-click="sortBy('RequestName') ; $ctrl.orderProp=orderProp ='RequestName'">RequestName
+                        <span class="sortorder" ng-show="$ctrl.orderProp === 'RequestName'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th ng-click="sortBy('Requestor') ; $ctrl.orderProp=orderProp ='Requestor'">Requestor
+                        <span class="sortorder" ng-show="$ctrl.orderProp === 'Requestor'" ng-class="{reverse: reverse}"></span></th>
+                    <th ng-click="sortBy('GoodEnding') ; $ctrl.orderProp=orderProp ='GoodEnding'">Good Ending
+                        <span class="sortorder" ng-show="$ctrl.orderProp === 'GoodEnding'" ng-class="{reverse: reverse}"></span></th>
+                    <th>Description </th>
+                    <th ng-click="sortBy('Storyteller') ; $ctrl.orderProp=orderProp ='Storyteller'">Storyteller
+                        <span class="sortorder" ng-show="$ctrl.orderProp === 'Storyteller'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th ng-click="sortBy('WantedCharacters') ; $ctrl.orderProp=orderProp ='WantedCharacters'">Wanted <br>Characters
+                        <span class="sortorder" ng-show="$ctrl.orderProp === 'WantedCharacters'" ng-class="{reverse: reverse}"></span></th>
+                    <th ng-click="sortBy('Deadline') ; $ctrl.orderProp=orderProp ='Deadline'">Deadline
+                        <span class="sortorder" ng-show="$ctrl.orderProp === 'Deadline'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th ng-click="sortBy('Budget') ; $ctrl.orderProp=orderProp ='Budget'">Budget
+                        <span class="sortorder" ng-show="$ctrl.orderProp === 'Budget'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th ng-click="sortBy('Status') ; $ctrl.orderProp=orderProp ='Status'">Status
+                        <span class="sortorder" ng-show="$ctrl.orderProp === 'Status'" ng-class="{reverse: reverse}"></span>
+                    </th>
+                    <th>Controls</th>
+                </tr>
+
+                <tr class="rowdeskwhite" ng-repeat="ReqData in filtered = (datablock | filter:$ctrl.query) | orderBy : orderPropA  | limitTo:perpage:startnum">
+                    <td>{{ReqData['Id']}} </td>
+                    <td>
+                        <div class="tooltip">{{truncString(ReqData['RequestName'],100)}}</div>
+                    </td>
+                    <td>{{ReqData['Requestor']}} </td>
+                    <td>{{ReqData['GoodEnding']}}</td>
+                    <td>
+                        <div class="tooltip">{{truncString(ReqData['Description'],100)}}
+                            <span class="tooltiptext" ng-if="truncated"><img src="img/edit.png" class="icoimg">Description ({{ReqData['Id']}})<img src="img/closecrossX.png" onclick="parentNode.style.visibility='hidden'" style="float:right">
+                                <textarea id="" class="tooltiparea" name="w3review" rows="5" cols="50">{{ReqData['Description']}}
+                        </textarea>
+                        <div style="text-align: right" onclick="parentNode.style.visibility='hidden'"><button class="button_tooltip" ng-click="setfoo('r'+ReqData['Id'])">Submit</button></div></span></div>
+                    </td>
+                    <td><span ng-if="ReqData['NeedStoryteller']">{{ReqData['Storyteller']}}</td>
+                        <td>{{ReqData['WantedCharacters']}} </td>
+                    <td nowrap><img src="img/calendar.png" class="icoimg">{{ReqData['Deadline'] | date:'dd-MMM-yy'}}</td>
+                    <td>{{ReqData['Budget']  | currency: "$":0}} </td>
+                    <td>{{ReqData['Status']}} </td>
+                    <td class="editpic">
+                        <a name="r{{ReqData['Id']}}" ng-click="setfoo('r'+ReqData['Id'])" title="Edit request {{ReqData['Id']}}"><img alt="Edit request {{ReqData['Id']}}" src="/img/edit20.png"></a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan=11>
+                        <span ng-if="startnum > 0"> <button  class="button_nav" ng-click="prevpage(startnum, 1)"><<</button> </span> &nbsp; Page {{((startnum+perpage) / perpage)}} of {{pagequant(filtered)}}&nbsp;
+                        <span ng-if="((startnum + perpage) / perpage) < pagequant(filtered)"> <button class="button_nav" ng-click="nextpage(startnum, 1)">>></button> </span>
+                    </td>
+                </tr>
+            </table>
+            <button class="button_biggest" ng-click="setnew('r')">Create new request</button>
+        </div>
+
+    </div>
+</div>

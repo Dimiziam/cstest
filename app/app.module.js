@@ -4,7 +4,7 @@
 angular.module('dashBoardApp', [
     // ...which depends on the `dashBoard` module
     'ngRoute',
-    'formDesk',
     'dashBoard',
+    'formData',
     'orderByColumn'
 ]);

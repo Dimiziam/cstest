@@ -1,26 +1,42 @@
 'use strict';
 
-// Register `dashBoard` component, along with its associated controller and template
 angular.
 module('dashBoard').
 component('dashBoard', {
     templateUrl: 'dash-board/dash-board.template.html',
-    controller: ['$http', function dashBoardController($http) {
+    controller: ['$http', '$routeParams', '$scope', function dashBoardController($http, $routeParams, $scope) {
         var self = this;
         self.startnum = self.startnumU = 0;
         self.orderProp = self.orderPropU = 'Id';
         self.orderPropA = self.orderPropUA = 'Id';
-        self.noOfPages = 1;
+
+        if ($routeParams.pid) {
+            self.view = "form";
+        } else {
+            self.view = "board";
+        }
+        self.data = $routeParams.data;
+
         $http.get('data/data.json').then(function(response) {
-            self.datablocks = response.data;
+            self.datablocks = self.dataarray = response.data;
         });
     }]
 });
 
 
 
-angular.module('orderByColumn', [])
-    .controller('OrderController', ['$scope', '$timeout', function($scope, $timeout) {
+angular.module('orderByColumn', ['ngMaterial', 'ngMessages'])
+    .controller('OrderController', ['$scope', '$timeout', '$location', '$filter', function($scope, $timeout, $location, $filter) {
+
+        $scope.$location = $location;
+        $scope.requestdata = {};
+        //$scope.editrequest = {};
+        $scope.backseat = {};
+        $scope.project = {
+            description: 'CS test',
+            rate: 500,
+            special: true
+        };
         // unique funcs
         $scope.truncString = function(stringA, maxL) {
             $scope.truncated = false;
@@ -30,11 +46,11 @@ angular.module('orderByColumn', [])
         };
         $scope.pagequant = function(arradates) {
             var pageNumU = Math.ceil(arradates.length / $scope.perpage);
-            //$scope.pageNumU = pageNumU;
             return pageNumU;
         };
         $scope.checkpagemy = function(incom, startnum) {
             $scope.maxpageU = incom;
+            $rootScope.reqdata = 'dash';
             $scope.curpageU = ((startnum + $scope.perpage) / $scope.perpage);
             if (incom < ((startnum + $scope.perpage) / $scope.perpage)) {
                 return true;
@@ -42,16 +58,86 @@ angular.module('orderByColumn', [])
                 return false;
             }
         };
+        $scope.$watch('editrequest', function(newValue, oldValue) {
+            console.log(newValue + ":" + oldValue)
+            $scope.CopyDisplayName = newValue;
+        });
+        $scope.copyValue = function() {
+            $scope.editrequest = angular.copy($scope.backseat);
+        };
+        $scope.pushdata = function(userdata, masterdata) {
+            masterdata.push(userdata);
+            $scope.$ctrl.view = 'board';
+        };
 
-        // for both
+        // form function
+        $scope.setfoo = function(pid) {
+            $scope.$ctrl.pid = pid;
+            $scope.$ctrl.mode = pid.substr(0, 1);
+            $scope.$ctrl.id = parseInt(pid.substr(1));
+            $scope.$ctrl.view = 'form';
+        };
+        $scope.setnew = function(pid) {
+            $scope.$ctrl.mode = pid;
+            $scope.$ctrl.view = 'form';
+        };
+        $scope.formatDate = function(date) {
+
+            return $filter('date')(date, "dd-MMM-yy");
+        };
+        $scope.updateU = function(editrequest) {
+            //angular.copy(editrequest, $scope.backseat);
+            $scope.$ctrl.view = 'board';
+        };
+        $scope.update = function(editrequest) {
+            // $scope.backseat = angular.copy(editrequest);
+            $scope.$ctrl.view = 'board';
+        };
+        $scope.returntodash = function() {
+            $scope.$ctrl.view = 'board';
+        };
+
+
+        var goback = {};
+
+        $scope.parseit = function(myarray, ids) {
+            let max = 1;
+            for (let i = 1; i < myarray.length; ++i) {
+                if (myarray[i].Id > max) {
+                    max = myarray[i].Id;
+                }
+            }
+            $scope.maxid = max;
+            $scope.nextid = ++max;
+            //$scope.emptyarr = { "DisplayName": "", "Name": "", "Surname": "", "Department": "", "Email": "", "Id": ++max, "Manager": false, "Roles": [] };
+            goback = myarray.find(x => x.Id == ids);
+            goback.Deadline = $scope.formatDate(goback.Deadline);
+            $scope.requestdata = goback;
+            angular.copy($scope.requestdata, $scope.backseat);
+            return (goback) ? goback : emptyarr;
+        };
+
+        $scope.statuses = ('Draft New Finished Other').split(' ').map(function(status) {
+            return { arra: status };
+        });
+
+        $scope.reset = function() {
+            $scope.editrequest = angular.copy($scope.backseat);
+            $scope.$ctrl.view = 'form';
+        };
+        $scope.resetU = function() {
+            angular.copy($scope.backseat, $scope.userdata);
+            $scope.$ctrl.view = 'form';
+        };
         $scope.initdata = function() {
             if (!$scope.orderPropA) $scope.orderPropA = 'Id';
             if (!$scope.startnum) $scope.startnum = 0;
             if (!$scope.orderPropUA) $scope.orderPropUA = 'Id';
             if (!$scope.startnumU) $scope.startnumU = 0;
             $scope.startnuminit = 0;
-            $scope.perpage = 3;
+            $scope.perpage = 10;
         };
+
         // divided
         $scope.sortBy = function(propertyName) {
             $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
@@ -76,6 +162,7 @@ angular.module('orderByColumn', [])
             }, 10);
         };
 
+
         $scope.prevpage = function(startnum, tabl) {
             if (tabl == 1) {
                 $scope.startnum = startnum - $scope.perpage;
@@ -95,14 +182,14 @@ angular.module('orderByColumn', [])
             return startnum;
         };
 
-        // obsolte
-        $scope.slicedata = function(arradates, iter) {
-            var endof = (iter * 5 > arradates.length) ? arradates.length : iter * 5;
-            iter--;
-            var datafiltered = angular.copy(arradates);
-            datafiltered = datafiltered.slice(iter * 5, endof);
-            $scope.datafiltered = datafiltered;
-            return datafiltered.length;
-        };
+    }])
+    .config(['$mdThemingProvider', function($mdThemingProvider) {
+        // Configure a  theme 
+        $mdThemingProvider.theme('docs-light', 'default')
+            .primaryPalette('grey')
+            .accentPalette('grey')
+            .warnPalette('grey')
+            .backgroundPalette('grey');
+
 
     }]);

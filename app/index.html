@@ -4,10 +4,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Credit Suisse - Additional Task for AngularJS</title>
+    <LINK REL="SHORTCUT ICON" href="/img/favicon.ico">
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="lib/angular-material/angular-material.css">
     <link rel="stylesheet" href="app.css" />
+    <link rel="stylesheet" href="forms.css" />
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
+    <script src="lib/angular-aria/angular-aria.js"></script>
+    <script src="lib/angular-animate/angular-animate.js"></script>
+    <script src="lib/angular-messages/angular-messages.js"></script>
+    <script src="lib/angular-material/angular-material.js"></script>
     <script src="app.module.js"></script>
     <script src="app.config.js"></script>
     <script src="dash-board/dash-board.module.js"></script>
@@ -23,6 +30,7 @@
         <dash-board>Loading</dash-board>   
         <div ng-view>View loading</div>
     -->
+
     <div ng-view>View loading</div>
     <ng-include src="'/footer.html'"></ng-include>
 </body>

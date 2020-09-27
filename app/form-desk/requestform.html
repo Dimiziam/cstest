@@ -1,0 +1,54 @@
+<!--<span ng-init="initreqform(editrequest)"></span>-->
+<div class="mtb100"><button class="button_bigform">Request submission</button><button class="button_bigform" id="white" ng-click="returntodash()">Save changes</button></div>
+<div class="h2form">
+    <h2 class="h2form">Request №{{editrequest.Id}}</h2>
+</div>
+<form>
+    <md-content md-theme="docs-light" layout-gt-sm="column">
+        <div class="md-inline-form" class="mtb100">
+            <input ng-model="editrequest.Id" disabled="" type="hidden">
+            <md-input-container class="mtb80">
+                <label class="cslabel">RequestName</label>
+                <input ng-model="editrequest.RequestName" class="input-container">
+                <div ng-messages="projectForm.description.$error">
+                    <div ng-message="required">This is required.</div>
+                    <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
+                </div>
+            </md-input-container>
+            <div class="mtb100">
+                <md-input-container class="mtb40"><label class="cslabel">Requestor</label><input class="input-container" name="Requestor" ng-model="editrequest.Requestor"></md-input-container>
+                <md-input-container class="mtb40"><label class="cslabel">GoodEnding</label><input class="input-container" ng-model="editrequest.GoodEnding"></md-input-container>
+            </div>
+            <md-input-container class="mtb80"><label class="cslabel">Description</label><textarea class="input-container" rows="5" cols="50" ng-model="editrequest.Description"></textarea></md-input-container>
+            <div class="mtb100">
+                <md-input-container class="mtb30">
+                    <label class="cslabel">Status</label>
+                    <md-select ng-model="editrequest.Status" class="input-container">
+                        <md-option ng-repeat="status in statuses" value="{{status.arra}}">
+                            {{status.arra}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <label class="cslabel">NeedStoryteller</label>
+                <md-checkbox ng-model="editrequest.NeedStoryteller"></md-checkbox>
+                <md-input-container class="mtb30"><label class="cslabel">Storyteller</label><input class="input-container" ng-model="editrequest.Storyteller"></md-input-container>
+                <div class="mtb100">
+                    <md-input-container class="mtb80"><label class="cslabel">WantedCharacters</label><input class="input-container" ng-model="editrequest.WantedCharacters"></md-input-container>
+                </div>
+            </div>
+            <div class="mtb100">
+                <md-input-container class="mtb30"><label class="cslabel">Deadline</label>
+                    <md-datepicker ng-model="editrequest.Deadline" md-open-on-focus=""></md-datepicker>
+                </md-input-container>
+                <md-input-container class="mtb30"><label class="cslabel">Budget {{backseat.Budget}}</label><input class="input-container" ng-model="editrequest.Budget"></md-input-container>
+
+                <div class="mtb100">
+
+                    <md-button class="button_bigform" type="submit" ng-click="update(editrequest)" name="Submit" value="Submit" ng-if="setnew == 0">Submit</md-button>
+                    <md-button class="button_bigform" type="reset" ng-click="reset()" name="Reset" value="Reset">Reset</md-button>
+                    <md-button class="button_bigform" type="submit" ng-click="pushdata(editrequest, $ctrl.dataarray['Requests'])" name="Submit" value="Submit" ng-if="setnew > 0">Save</md-button>
+                    <md-button class="button_bigform" type="submit" ng-click="returntodash()" name="Submit" value="Submit">Cancel</md-button>
+                </div>
+            </div>
+    </md-content>
+</form>
