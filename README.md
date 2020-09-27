@@ -1,4 +1,11 @@
-# Credit Suisse - Additional Task for AngularJS
+# Credit Suisse - Coding Assignment
+
+## Stage of execution
+Unfortunately, due to lack of time and experience, ефыл was not fully accomplished.
+List of missed things:
+ - form fields verification
+ - form disabling using fake api query
+ - some styles elements and options
 
 ## source
 
