@@ -1,7 +1,7 @@
 # Credit Suisse - Coding Assignment
 
 ## Stage of execution
-Unfortunately, due to lack of time (I still have some important duties at my current job position) and lack of experience with AngularJS materials, task was not fully accomplished.
+Unfortunately, due to lack of time (I still have some important duties at my current job position) and lack of experience with AngularJS materials, the task was not fully accomplished.
 List of missed things:
  - form fields verification
  - form disabling using fake api query
@@ -10,7 +10,7 @@ List of missed things:
 ## source
 
 - Placed at Github
-https://github.com/Dimiziam/cstest.git
+https://github.com/Dimiziam/cstest/
 
 ### Data source
 
@@ -27,7 +27,7 @@ Anyway:
 - The application filesystem layout structure is based on the [angular-seed][angular-seed] project.
 
 ### Running the Application
-Comand Line
+Command Line
 - git clone https://github.com/Dimiziam/cstest.git
 - cd cstest
 - Run `npm start`.
